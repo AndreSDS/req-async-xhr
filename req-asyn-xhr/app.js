@@ -9,14 +9,23 @@
         responseContainer.innerHTML = '';
         searchedForText = searchField.value;
 
-        const unsplashRequest = new XMLHttpRequest();
-        unsplashRequest.onload = addImage;
-        unsplashRequest.onerror = function (err) {
+        const imgRequest = new XMLHttpRequest();
+        imgRequest.onload = addImage;
+        imgRequest.onerror = function (err) {
           requestError(err, 'image');
         };
-        unsplashRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
-        unsplashRequest.setRequestHeader('Authorization', 'Client-ID 62a66d916869262ce2efe09dfe50fea1963aed5a85d0ac0c1c708a90d0d64982');
-        unsplashRequest.send();
+        imgRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
+        imgRequest.setRequestHeader('Authorization', 'Client-ID 62a66d916869262ce2efe09dfe50fea1963aed5a85d0ac0c1c708a90d0d64982');
+        imgRequest.send();
+
+        const articleRequest = new XMLHttpRequest();
+        articleRequest.onload = addArticles;
+          articleRequest.onerror = function (err) {
+            requestError(err, 'article');
+          };
+        articleRequest.open('GET', `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=980b1f6416fc4b2dbe1e9c317750d041`);
+        articleRequest.send();
+
         function addImage(){
           let htmlContent = '';
           const data = JSON.parse(this.responseText);
@@ -29,13 +38,6 @@
           responseContainer.insertAdjacentHTML('afterbegin', htmlContent);
         }
 
-          const articleRequest = new XMLHttpRequest();
-          articleRequest.onload = addArticles;
-            articleRequest.onerror = function (err) {
-              requestError(err, 'article');
-            };
-          articleRequest.open('GET', `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=980b1f6416fc4b2dbe1e9c317750d041`);
-          articleRequest.send();
           function addArticles () {
             let htmlContent = '';
             const data = JSON.parse(this.responseText);
