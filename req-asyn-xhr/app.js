@@ -26,7 +26,7 @@
           articleRequest.onerror = function (err) {
             requestError(err, 'article');
           };
-        articleRequest.open('GET', `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=980b1f6416fc4b2dbe1e9c317750d041`);
+        articleRequest.open('GET', `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=980b1f6416fc4b2dbe1e9c317750d041`);
         articleRequest.send();
 
         function addImage(){
