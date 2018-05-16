@@ -4,14 +4,11 @@
     let searchedForText;
     const responseContainer = document.querySelector('#response-container');
 
-    document.getElementById('submit-btn').addEventListener('click', function(){
-      document.getElementById('submit-btn').disabled = true;
-      document.getElementById('submit-btn').innerHTML = "Aguarde...";
-    });
-
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        console.log("submeteu");
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').innerHTML = "Aguarde...";
+
         responseContainer.innerHTML = '';
         searchedForText = searchField.value;
 
